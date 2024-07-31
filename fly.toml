@@ -7,7 +7,7 @@ app = 'runteq-love'
 primary_region = 'nrt'
 
 [build]
-  image = "Dockerfile"
+  dockerfile = "./Dockerfile"
 
 [env]
   PORT = '3000'
