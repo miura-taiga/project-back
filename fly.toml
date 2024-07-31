@@ -7,8 +7,7 @@ app = 'runteq-love'
 primary_region = 'nrt'
 
 [build]
-  builder = 'paketobuildpacks/builder:base'
-  buildpacks = ['gcr.io/paketo-buildpacks/ruby']
+  image = "Dockerfile"
 
 [env]
   PORT = '3000'
