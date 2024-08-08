@@ -26,5 +26,15 @@ module App
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
+
+    config.generators do |g|
+      g.skip_routes true
+      g.helper false
+      g.test_framework nil
+    end
+
+    # Add session and cookies middleware
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_qunteq_love_session'
   end
 end

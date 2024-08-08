@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # google認証にアクセス
+  get '/auth/:provider/callback', to: 'sessions#create'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # ユーザー登録のルート(API)
+  namespace :api do
+    namespace :v1 do
+      # カレントユーザーの呼び出し
+      get 'users/current', to: 'users#current'
+    end
+  end
 end
