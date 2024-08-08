@@ -83,4 +83,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # ホスト許可リストに追加
+  config.hosts << "api"
+  config.hosts << "runteq-love-back.fly.dev"
 end
