@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
 
   def create
-    frontend_url = ENV['REACT_APP_API_URL']
+    frontend_url = ENV['NEXT_PUBLIC_API_URL']
     user_info = request.env['omniauth.auth']
     google_user_id = user_info['uid']
     provider = user_info['provider']
