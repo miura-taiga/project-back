@@ -64,7 +64,4 @@ Rails.application.configure do
 
   # ホスト許可リストに追加
   config.hosts << "api"
-
-  # ホスト許可
-  config.hosts << "https://project-back-ijiz.onrender.com"
 end
