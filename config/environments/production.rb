@@ -83,4 +83,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # ホスト許可
+  config.hosts << "[https://project-back-ijiz.onrender.com]"
 end
