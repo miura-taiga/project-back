@@ -61,8 +61,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # ホスト許可リストに追加
   config.hosts << "api"
 
   # ホスト許可
-  config.hosts << "[https://project-back-ijiz.onrender.com]"
+  config.hosts << "https://project-back-ijiz.onrender.com"
 end
