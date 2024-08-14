@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  include ActionController::Cookies # cookiesを使えるようにするために追加
+
   skip_before_action :authenticate_request, only: [:create]
 
   def create
@@ -8,18 +10,15 @@ class SessionsController < ApplicationController
     provider = user_info['provider']
     token = generate_token_with_google_user_id(google_user_id, provider)
 
-    user_authentication = UserAuthentication.find_by(uid: google_user_id, provider: provider)
+    user_authentication = UserAuthentication.find_by(uid: google_user_id, provider:)
 
     if user_authentication
-      Rails.logger.info("アプリユーザー登録されている")
-      redirect_to "#{frontend_url}/pages/top?token=#{token}", allow_other_host: true
+      Rails.logger.info('アプリユーザー登録されている')
     else
-      Rails.logger.info("まだアプリユーザー登録されていない")
-      # ユーザーを作成(カラムはアプリの内容によって変更する)
-      # user = User.create(name: "新規ユーザー", achievement: 0, current_avatar_url: "/default/default_player.png")
+      Rails.logger.info('まだアプリユーザー登録されていない')
       user = User.create(
-        name: "新規ユーザー",
-        gender: "未設定",
+        name: '新規ユーザー',
+        gender: '未設定',
         age: nil,
         entry_term: nil,
         avatar: nil,
@@ -27,16 +26,22 @@ class SessionsController < ApplicationController
         favorite_body_part: nil,
         programming_fun_moment: nil
       )
-      UserAuthentication.create(user_id: user.id, uid: google_user_id, provider: provider)
-      redirect_to "#{frontend_url}/pages/top?token=#{token}", allow_other_host: true
+      UserAuthentication.create(user_id: user.id, uid: google_user_id, provider:)
     end
+
+    # トークンをCookieに保存
+    cookies.signed[:auth_token] =
+      { value: token, httponly: true, secure: Rails.env.production?, expires: 24.hours.from_now }
+
+    # トップページにリダイレクト
+    redirect_to "#{frontend_url}/pages/top", allow_other_host: true
   end
 
   private
 
   def generate_token_with_google_user_id(google_user_id, provider)
     exp = Time.now.to_i + 24 * 3600
-    payload = { google_user_id: google_user_id, provider: provider, exp: exp }
+    payload = { google_user_id:, provider:, exp: }
     hmac_secret = ENV['JWT_SECRET_KEY']
     JWT.encode(payload, hmac_secret, 'HS256')
   end
