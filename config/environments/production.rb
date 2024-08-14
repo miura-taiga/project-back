@@ -85,5 +85,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # ホスト許可
-  config.hosts << "project-back-ijiz.onrender.com"
+  config.hosts << "project-back-1qc9.onrender.com"
 end
